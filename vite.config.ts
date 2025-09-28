@@ -10,15 +10,13 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
           supabase: ['@supabase/supabase-js'],
           forms: ['react-hook-form', '@hookform/resolvers', 'yup'],
-          crypto: ['crypto-js', 'bcryptjs', 'jsonwebtoken'],
-          blockchain: ['web3', 'ipfs-http-client'],
           ui: ['lucide-react', 'qrcode']
         }
       }
