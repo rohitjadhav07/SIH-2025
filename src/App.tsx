@@ -23,11 +23,17 @@ const AppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showPublicScanner, setShowPublicScanner] = useState(false);
 
-  // Check if URL contains public scanner route
+  // Check if URL contains public scanner route or registration mode
   useEffect(() => {
     const path = window.location.pathname;
+    const params = new URLSearchParams(window.location.search);
+    
     if (path === '/verify' || path.includes('verify')) {
       setShowPublicScanner(true);
+    }
+    
+    if (params.get('mode') === 'register') {
+      setAuthMode('register');
     }
   }, []);
 
@@ -54,13 +60,19 @@ const AppContent: React.FC = () => {
         {/* Public Access Banner */}
         <div className="bg-green-600 text-white py-2 px-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between text-sm">
-            <span>🔍 Verify product authenticity without login</span>
-            <button
-              onClick={() => setShowPublicScanner(true)}
-              className="bg-green-700 hover:bg-green-800 px-3 py-1 rounded text-xs font-medium transition-colors"
-            >
-              Scan QR Code
-            </button>
+            <div className="flex items-center space-x-4">
+              <span>🔍 Verify product authenticity without login</span>
+              <button
+                onClick={() => setShowPublicScanner(true)}
+                className="bg-green-700 hover:bg-green-800 px-3 py-1 rounded text-xs font-medium transition-colors"
+              >
+                Scan QR Code
+              </button>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-xs opacity-75">For businesses:</span>
+              <span className="text-xs font-medium">Login below to access dashboard</span>
+            </div>
           </div>
         </div>
         

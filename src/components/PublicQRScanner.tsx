@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { QrCode, Search, Package, MapPin, Calendar, Shield, Leaf, Factory, TestTube, Award, ExternalLink, Download } from 'lucide-react';
+import { PublicHeader } from './PublicHeader';
 
 interface ProductTraceability {
   formulation: {
@@ -148,24 +149,7 @@ export const PublicQRScanner: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
-                <Leaf className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">SwasthyaChain</h1>
-                <p className="text-xs text-gray-500">Product Verification Portal</p>
-              </div>
-            </div>
-            <div className="text-sm text-gray-600">
-              Verify Ayurvedic Products
-            </div>
-          </div>
-        </div>
-      </div>
+      <PublicHeader showBackButton={true} showLoginButton={true} />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Scanner Section */}
@@ -490,6 +474,33 @@ export const PublicQRScanner: React.FC = () => {
               <p className="font-medium text-gray-900">Brahmi Extract</p>
               <p className="text-sm text-gray-600">QR-BRA-2024-003</p>
             </button>
+          </div>
+        </div>
+
+        {/* Footer with Navigation */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-8">
+          <div className="text-center">
+            <h4 className="text-lg font-semibold text-gray-900 mb-2">Are you a business stakeholder?</h4>
+            <p className="text-gray-600 mb-4">
+              Access the full SwasthyaChain platform to manage your supply chain operations
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => window.location.href = '/'}
+                className="flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+              >
+                <span>Access Business Dashboard</span>
+              </button>
+              <button
+                onClick={() => window.location.href = '/?mode=register'}
+                className="flex items-center justify-center space-x-2 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              >
+                <span>Register Your Business</span>
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 mt-4">
+              For farmers, processors, manufacturers, testing labs, and regulators
+            </p>
           </div>
         </div>
       </div>
