@@ -14,7 +14,7 @@ export interface QRCodeData {
 }
 
 export class QRCodeService {
-  private secretKey = process.env.REACT_APP_QR_SECRET || 'SwasthyaChain2024SecretKey';
+  private secretKey = import.meta.env.VITE_QR_SECRET || 'SwasthyaChain2024SecretKey';
 
   async generateQRCode(data: QRCodeData, size: number = 300): Promise<string> {
     try {
