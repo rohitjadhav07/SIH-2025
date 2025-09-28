@@ -13,14 +13,24 @@ class AuthService {
 
       if (!data.user) throw new Error('No user data returned');
 
-      // Get user profile
+      // Get user profile by email (more reliable)
       const { data: profile, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
-        .eq('auth_user_id', data.user.id)
+        .eq('email', data.user.email)
         .single();
 
-      if (profileError) throw profileError;
+      if (profileError) {
+        throw new Error('User profile not found. Please contact administrator.');
+      }
+
+      // Update auth_user_id if it doesn't match
+      if (profile.auth_user_id !== data.user.id) {
+        await supabase
+          .from('user_profiles')
+          .update({ auth_user_id: data.user.id })
+          .eq('id', profile.id);
+      }
 
       if (!profile.is_active) {
         throw new Error('Account is deactivated. Please contact administrator.');
@@ -143,31 +153,19 @@ class AuthService {
         return null;
       }
 
-      // Try to find profile by auth_user_id first
-      let { data: profile, error } = await supabase
+      // Find profile by email (more reliable for demo users)
+      const { data: profile, error } = await supabase
         .from('user_profiles')
         .select('*')
-        .eq('auth_user_id', user.id)
+        .eq('email', user.email)
         .single();
 
-      // If not found by auth_user_id, try by email as fallback
-      if (error && user.email) {
-        const { data: profileByEmail, error: emailError } = await supabase
+      // If profile found but auth_user_id doesn't match, update it
+      if (profile && profile.auth_user_id !== user.id) {
+        await supabase
           .from('user_profiles')
-          .select('*')
-          .eq('email', user.email)
-          .single();
-        
-        if (!emailError && profileByEmail) {
-          profile = profileByEmail;
-          error = null;
-          
-          // Update the auth_user_id to match
-          await supabase
-            .from('user_profiles')
-            .update({ auth_user_id: user.id })
-            .eq('id', profile.id);
-        }
+          .update({ auth_user_id: user.id })
+          .eq('id', profile.id);
       }
 
       if (error || !profile) {
