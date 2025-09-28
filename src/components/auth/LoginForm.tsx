@@ -31,6 +31,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
     { role: 'Manufacturer', email: 'manufacturing@himalaya.com', password: 'mfg123' },
   ];
 
+  const demoCredentials = [
+    { role: 'Admin', email: 'admin@swasthyachain.gov.in', password: 'admin123' },
+    { role: 'Regulator', email: 'regulator@ayush.gov.in', password: 'regulator123' },
+    { role: 'Farmer', email: 'ramesh.patel@gmail.com', password: 'farmer123' },
+    { role: 'Wild Collector', email: 'priya.nair@forestcoop.org', password: 'collector123' },
+    { role: 'Testing Lab', email: 'lab@qualitylabs.com', password: 'lab123' },
+    { role: 'Manufacturer', email: 'manufacturing@himalaya.com', password: 'mfg123' },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50 flex items-center justify-center p-4">
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -159,16 +168,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
 
             {/* Demo Credentials */}
             <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-              <h4 className="text-sm font-medium text-gray-700 mb-3">Demo Credentials:</h4>
+              <h4 className="text-sm font-medium text-gray-700 mb-3">Demo Credentials for Testing:</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 {demoCredentials.map((cred, index) => (
-                  <div key={index} className="bg-white p-2 rounded border">
+                  <div key={index} className="bg-white p-2 rounded border hover:bg-gray-50 cursor-pointer transition-colors">
                     <div className="font-medium text-gray-900">{cred.role}</div>
                     <div className="text-gray-600">{cred.email}</div>
                     <div className="text-gray-500">{cred.password}</div>
                   </div>
                 ))}
               </div>
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Use any of these credentials to explore different user roles and features
+              </p>
             </div>
           </div>
         </div>
